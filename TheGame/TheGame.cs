@@ -8,8 +8,8 @@ namespace TheGame
     public partial class TheGame : Form
     {
         const int SquareSide = 25;
-        int pos = 0;
-        int ros = 0;
+        int xpos = 0;
+        int ypos = 0;
         int score = 0;
         List<List<int>> PlayingField = new List<List<int>>() { };
         Random r = new Random();
@@ -28,9 +28,9 @@ namespace TheGame
                 }
             }
             label1.Text = score.ToString();
-            pos = MainPanel.Width / SquareSide / 2;
-            ros = MainPanel.Height / SquareSide - 1;
-            PlayingField[ros][pos] = -1;
+            xpos = MainPanel.Width / SquareSide / 2;
+            ypos = MainPanel.Height / SquareSide - 1;
+            PlayingField[ypos][xpos] = -1;
         }
 
 
@@ -66,8 +66,8 @@ namespace TheGame
                 {
                     GameOver();
                 }
-                PlayingField[ros + 1][pos] = 0;
-                PlayingField[ros][pos] = -1;
+                PlayingField[ypos + 1][xpos] = 0;
+                PlayingField[ypos][xpos] = -1;
                 PlayingField.RemoveAt(MainPanel.Height / SquareSide);
             }
         }
@@ -80,9 +80,9 @@ namespace TheGame
                     PlayingField[i][j] = 0;
                 }
             }
-            pos = MainPanel.Width / SquareSide / 2;
-            ros = MainPanel.Height / SquareSide - 1;
-            PlayingField[ros][pos] = -1;
+            xpos = MainPanel.Width / SquareSide / 2;
+            ypos = MainPanel.Height / SquareSide - 1;
+            PlayingField[ypos][xpos] = -1;
             score = 0;
         }
         //
@@ -106,7 +106,7 @@ namespace TheGame
         }
         private bool CheckPosition(int w, int a, int s, int d)
         {
-            if (PlayingField[ros - w + s][pos - a + d] == 1 || (ros - w + s) >= MainPanel.Height / SquareSide || (pos - a + d) >= MainPanel.Width / SquareSide)
+            if (PlayingField[ypos - w + s][xpos - a + d] == 1 || (ypos - w + s) >= MainPanel.Height / SquareSide || (xpos - a + d)* SquareSide >= MainPanel.Width )
             {
                 return true;
             }
@@ -128,10 +128,10 @@ namespace TheGame
             {
                 GameOver();
             }
-            PlayingField[ros][pos] = 0;
-            ros = ros - w + s;
-            pos = pos - a + d;
-            PlayingField[ros][pos] = -1;
+            PlayingField[ypos][xpos] = 0;
+            ypos = ypos - w + s;
+            xpos = xpos - a + d;
+            PlayingField[ypos][xpos] = -1;
         }
         private void TheGame_KeyUp(object sender, KeyEventArgs e)
         {
